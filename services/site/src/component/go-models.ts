@@ -35,12 +35,11 @@ export const goModels: GoModel[] = [
   { id: "glm-5.2", name: "GLM-5.2", requests: 880, allowance: 60 },
   { id: "deepseek-v4-pro", name: "DeepSeek V4 Pro", requests: 1050, allowance: 15 },
   { id: "kimi-k2.7-code", name: "Kimi K2.7 Code", requests: 1350, allowance: 60, featured: true },
-  { id: "hy4", name: "Hy4", requests: 2710, allowance: 60, featured: true, fresh: true },
+  { id: "hy4", name: "Hy4", requests: 2710, allowance: 60, featured: true },
   { id: "hy4-preview", name: "Hy4 preview", requests: 1350, allowance: 30 },
   { id: "gpt-5.6-luna", name: "GPT 5.6 Luna", requests: 2050, allowance: 15 },
   { id: "minimax-m3", name: "MiniMax M3", requests: 3200, allowance: 60, featured: true },
   { id: "mimo-v2.6-pro", name: "MiMo-V2.6-Pro", requests: 3250, allowance: 15 },
-  { id: "mimo-v2.5-pro", name: "MiMo-V2.5-Pro", requests: 3250, allowance: 15 },
   { id: "minimax-m3.1-flash", name: "MiniMax M3.1 Flash", requests: 3880, allowance: 20, featured: true },
   { id: "claude-haiku-5-5", name: "Claude Haiku 5.5", requests: 3850, allowance: 15, featured: true },
   { id: "qwen3.7-plus", name: "Qwen3.7 Plus", requests: 4300, allowance: 60, featured: true },
@@ -49,7 +48,7 @@ export const goModels: GoModel[] = [
   { id: "qwen3.8-flash", name: "Qwen3.8 Flash", requests: 5400, allowance: 30 },
   { id: "glm-5.3-flash", name: "GLM-5.3-Flash", requests: 6320, allowance: 60, featured: true },
   {
-    id: "deepseek-flash",
+    id: "deepseek-v4.1-flash",
     name: "DeepSeek V4.1 Flash",
     requests: 43330,
     allowance: 100,
@@ -63,7 +62,6 @@ export const goModels: GoModel[] = [
     allowance: 60,
     featured: true,
   },
-  { id: "mimo-v2.5", name: "MiMo-V2.5", requests: 30100, allowance: 60 },
   {
     id: "muse-spark-1.3-contributor",
     name: "Muse Spark 1.3 Contributor",
@@ -103,6 +101,15 @@ export const goModels: GoModel[] = [
     featured: true,
     limitedTime: true,
   },
+  {
+    id: "hy4-flash-free",
+    name: "Hy4 flash Free",
+    requests: Infinity,
+    allowance: Infinity,
+    featured: true,
+    fresh: true,
+    limitedTime: true,
+  },
 ].sort((a, b) => a.requests - b.requests)
 
 // Go Plus and Go Teams limits are published per model in the Console (packages/shared/src/domain/go-published-limits.ts).
@@ -123,7 +130,6 @@ const plusLimits: Record<string, [number, number]> = {
   "gpt-5.6-luna": [8200, 60],
   "minimax-m3": [9600, 180],
   "mimo-v2.6-pro": [13000, 60],
-  "mimo-v2.5-pro": [13000, 60],
   "minimax-m3.1-flash": [15500, 80],
   "qwen3.7-plus": [12900, 180],
   "gpt-6-luna": [16920, 60],
@@ -131,15 +137,15 @@ const plusLimits: Record<string, [number, number]> = {
   hy3: [17200, 240],
   "qwen3.8-flash": [16200, 90],
   "glm-5.3-flash": [18960, 180],
-  "deepseek-flash": [86670, 200],
+  "deepseek-v4.1-flash": [86670, 200],
   "longcat-2.0": [45600, 240],
   "mimo-v2.6-flash": [60200, 120],
-  "mimo-v2.5": [60200, 120],
   "muse-spark-1.3-contributor": [90600, 120],
   "muse-spark-1.2-contributor": [90600, 120],
   "beam-free": [Infinity, Infinity],
   "iceman-contributor-free": [Infinity, Infinity],
   "longcat-2.5-free": [Infinity, Infinity],
+  "hy4-flash-free": [Infinity, Infinity],
 }
 
 const teamsLimits: Record<string, [number, number]> = {
@@ -159,7 +165,6 @@ const teamsLimits: Record<string, [number, number]> = {
   "gpt-5.6-luna": [2733, 20],
   "minimax-m3": [3467, 65],
   "mimo-v2.6-pro": [4333, 20],
-  "mimo-v2.5-pro": [4333, 20],
   "minimax-m3.1-flash": [4850, 25],
   "qwen3.7-plus": [4658, 65],
   "gpt-6-luna": [5640, 20],
@@ -167,15 +172,15 @@ const teamsLimits: Record<string, [number, number]> = {
   hy3: [4658, 65],
   "qwen3.8-flash": [6300, 35],
   "glm-5.3-flash": [6847, 65],
-  "deepseek-flash": [45500, 105],
+  "deepseek-v4.1-flash": [45500, 105],
   "longcat-2.0": [12350, 65],
   "mimo-v2.6-flash": [32608, 65],
-  "mimo-v2.5": [32608, 65],
   "muse-spark-1.3-contributor": [49075, 65],
   "muse-spark-1.2-contributor": [49075, 65],
   "beam-free": [Infinity, Infinity],
   "iceman-contributor-free": [Infinity, Infinity],
   "longcat-2.5-free": [Infinity, Infinity],
+  "hy4-flash-free": [Infinity, Infinity],
 }
 
 // A bonus multiplies a model's usual allowance, which is shown crossed out beside the current limits.
