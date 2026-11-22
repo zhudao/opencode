@@ -355,9 +355,16 @@ export type ArtifactID = string
 
 export type ArtifactTime = { created: number; updated: number }
 
-export type MachineInfo = { id: string; online: boolean; paired: boolean; os?: string; arch?: string }
+export type MachineInfo = {
+  id: string
+  online: boolean
+  paired: boolean
+  os?: string
+  arch?: string
+  connection?: { kind: "websocket" | "iroh"; path?: "direct" | "relayed"; rtt?: number }
+}
 
-export type MachineInvite = { name: string; join: string; expires: number }
+export type MachineReach = { type: "url"; url: string }
 
 export type ReferenceGitSource = { type: "git"; repository: string; branch?: string }
 
@@ -761,7 +768,14 @@ export type GenerateChoiceAnswer = {
   confidence: number
 }
 
-export type VoiceModel = { model: string; provider: string; transports: Array<VoiceTransportType>; available: boolean }
+export type VoiceModel = {
+  model: string
+  name: string
+  engine: string
+  provider: string
+  transports: Array<VoiceTransportType>
+  available: boolean
+}
 
 export type VoiceTransport = VoiceWebRTCTransport | VoiceWebSocketTransport
 
@@ -1019,6 +1033,13 @@ export type ArtifactInfo = {
   entry: string
   url: string
   time: ArtifactTime
+}
+
+export type MachineInvite = {
+  name: string
+  join: string
+  expires: number
+  reach: Array<MachineReach | { type: "iroh" }>
 }
 
 export type VcsInfo = { provider?: string; branch: VcsBranch }
@@ -2645,7 +2666,6 @@ export type ConfigEntry =
           artifacts?: boolean
           video_generate?: boolean | { model?: string | { providerID: string; model: string; variant?: string } }
           console_watches?: boolean
-          mcp_events?: boolean
           recommended_api?: boolean
           full_codemode?: boolean
           machines?: boolean

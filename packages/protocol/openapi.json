@@ -16902,7 +16902,7 @@
             "$ref": "#/components/schemas/Automation.Trigger.Event"
           }
         ],
-        "description": "When it runs: { type: \"at\", at: \"in 20 minutes\" | \"2026-10-27T09:00\" }, { type: \"every\", every: \"1 hour\" } or { type: \"cron\", cron: \"0 9 * * 1-5\" }, each with an optional tz. Or { type: \"event\", server, event, args? } for a connected MCP server advertising push delivery (requires mcp_events)."
+        "description": "When it runs: { type: \"at\", at: \"in 20 minutes\" | \"2026-10-27T09:00\" }, { type: \"every\", every: \"1 hour\" } or { type: \"cron\", cron: \"0 9 * * 1-5\" }, each with an optional tz. Or { type: \"event\", server, event, args? } for a connected MCP server advertising push delivery."
       },
       "Automation.Trigger.At": {
         "type": "object",
@@ -17714,9 +17714,6 @@
                 ]
               },
               "console_watches": {
-                "type": "boolean"
-              },
-              "mcp_events": {
                 "type": "boolean"
               },
               "recommended_api": {
@@ -21501,6 +21498,32 @@
           },
           "arch": {
             "type": "string"
+          },
+          "connection": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["websocket", "iroh"]
+              },
+              "path": {
+                "type": "string",
+                "enum": ["direct", "relayed"]
+              },
+              "rtt": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string",
+                    "enum": ["Infinity", "-Infinity", "NaN"]
+                  }
+                ]
+              }
+            },
+            "required": ["kind"],
+            "additionalProperties": false
           }
         },
         "required": ["id", "online", "paired"],
@@ -21519,9 +21542,30 @@
             "type": "integer",
             "minimum": -9007199254740991,
             "maximum": 9007199254740991
+          },
+          "reach": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/Machine.Reach"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": ["iroh"]
+                    }
+                  },
+                  "required": ["type"],
+                  "additionalProperties": false
+                }
+              ]
+            }
           }
         },
-        "required": ["name", "join", "expires"],
+        "required": ["name", "join", "expires", "reach"],
         "additionalProperties": false
       },
       "Machine.Reach": {
@@ -26812,6 +26856,12 @@
           "model": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
+          "engine": {
+            "type": "string"
+          },
           "provider": {
             "type": "string"
           },
@@ -26825,7 +26875,7 @@
             "type": "boolean"
           }
         },
-        "required": ["model", "provider", "transports", "available"],
+        "required": ["model", "name", "engine", "provider", "transports", "available"],
         "additionalProperties": false
       },
       "VoiceModelsResponse": {
